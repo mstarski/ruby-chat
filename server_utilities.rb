@@ -15,13 +15,13 @@ module Server
     end
 
     def self.handle_client_connection(client)
-        puts "New user connected: #{client}"
-        client.write('Connection successful')
+        puts "New user connected: #{client.gethostbyname}"
+        client.write("Connection successful\n To exit simply type 'exit' ")
     end
 
     def self.recv_from_client(client) 
         loop {
-            puts "#{client} [#{Time.now}]: #{client.recv(255)}"
+            puts "#{client.gethostbyname} [#{Time.now}]: #{client.recv(255)}"
         }
     end
 end

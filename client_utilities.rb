@@ -21,8 +21,11 @@ module Client
     def self.client_send_message(socket_var)
         msg = '' 
         loop {
+            print '# '
             msg = gets.to_s
+            break if msg == "exit\n"
             socket_var.write(msg)
         }
+        socket_var.close
     end
 end

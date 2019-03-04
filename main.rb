@@ -25,5 +25,5 @@ if entry_choice == 1
     server_creation = Thread.new{Server::create_server()}
     server_creation.join
 else 
-    Client.connect_as_client()
+    Client::connect_as_client()
 end
