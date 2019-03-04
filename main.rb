@@ -22,8 +22,10 @@ loop {
 }
 
 if entry_choice == 1
-    server_creation = Thread.new{Server::create_server()}
+    server = ServerModule::Server.new
+    server_creation = Thread.new{server.create_server()}
     server_creation.join
 else 
-    Client::connect_as_client()
+    client = ClientModule::Client.new
+    client.connect_as_client()
 end
