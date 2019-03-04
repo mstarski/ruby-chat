@@ -15,13 +15,15 @@ module Server
     end
 
     def self.handle_client_connection(client)
-        puts "New user connected: #{client}"
+    sock_domain, remote_port, remote_hostname, remote_ip = client.peeraddr
+        puts "New user connected: #{remote_hostname}:#{remote_port}"
         client.write("Connection successful\n To exit simply type 'exit'")
     end
 
     def self.recv_from_client(client) 
+        sock_domain, remote_port, remote_hostname, remote_ip = client.peeraddr
         loop {
-            puts "#{client.gethostbyname} [#{Time.now}]: #{client.recv(255)}"
+            puts "#{remote_ip}:#{remote_port} [#{Time.now}]: #{client.recv(255)}"
         }
     end
 end
