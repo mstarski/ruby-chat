@@ -16,13 +16,14 @@ module ClientModule
         end
         
         def client_recv_message(socket_var)
-            puts socket_var.recv(255)
+            loop {
+                puts socket_var.recv(255)
+            }
         end
         
         def client_send_message(socket_var)
             msg = '' 
             loop {
-                print "# "
                 msg = gets.to_s
                 break if msg == "exit\n"
                 socket_var.write(msg)
