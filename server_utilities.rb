@@ -15,8 +15,8 @@ module Server
     end
 
     def self.handle_client_connection(client)
-        puts "New user connected: #{client.gethostbyname}"
-        client.write("Connection successful\n To exit simply type 'exit' ")
+        puts "New user connected: #{client}"
+        client.write("Connection successful\n To exit simply type 'exit'")
     end
 
     def self.recv_from_client(client) 
