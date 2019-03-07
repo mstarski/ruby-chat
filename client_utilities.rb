@@ -17,7 +17,7 @@ module ClientModule
         
         def client_recv_message(socket_var)
             loop {
-                puts socket_var.recv(255)
+                puts socket_var.recv(255).yellow
             }
         end
         

@@ -5,9 +5,9 @@ module ServerModule
         end
 
         def create_server
-            puts 'Please provide a valid domain'
+            puts 'Please provide a valid domain'.green
             domain = gets.to_s
-            puts 'Please provide a valid port'
+            puts 'Please provide a valid port'.green
             port = gets.to_i
             puts 'Starting a server ...'
             server = TCPServer.open(domain.chomp, port)
