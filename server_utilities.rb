@@ -12,10 +12,11 @@ module ServerModule
             puts 'Starting a server ...'
             server = TCPServer.open(domain.chomp, port)
             loop {
-                client = server.accept
-                @clients.push(client)
-                t1 = Thread.new{handle_client_connection(client)}
-                t2 = Thread.new{recv_from_client(client)}
+                Thread.start(server.accept) do |client|
+                    @clients.push(client)
+                    t1 = Thread.new{handle_client_connection(client)}
+                    t2 = Thread.new{recv_from_client(client)}
+                end
             }
             server.close
         end
@@ -31,9 +32,13 @@ module ServerModule
             loop {
                 client_message = client.recv(255)
                 break if client_message.chomp == ""
-                @clients.each do |c|
-                    if c != client
-                        c.write("#{remote_ip}:#{remote_port} [#{Time.now}]: #{client_message}")
+                @clients.each do |c, index|
+                    begin
+                        if c != client
+                            c.write("#{remote_ip}:#{remote_port} [#{Time.now}]: #{client_message}")
+                        end
+                    rescue
+                        @clients.delete_at(index.to_i)
                     end
                 end
                 puts "#{remote_ip}:#{remote_port} [#{Time.now}]: #{client_message}"
